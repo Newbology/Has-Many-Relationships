@@ -1,14 +1,16 @@
 DROP DATABASE has_many_blogs;
 DROP USER has_many_user;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS posts;
-DROP TABLE IF EXISTS comments;
+DROP TABLE  IF EXISTS users CASCADE;
+DROP TABLE  IF EXISTS posts CASCADE;
+DROP TABLE  IF EXISTS comments CASCADE;
+
 
 CREATE USER has_many_user;
-CREATE DATABASE has_many_blogs OWNER has_many_user;
+CREATE DATABASE has_many_blogs WITH OWNER has_many_user;
 
-CREATE TABLE IF NOT EXISTS users
-(
+\c has_many_blogs
+
+CREATE TABLE IF NOT EXISTS users(
   id SERIAL,
   username VARCHAR(90) NOT NULL,
   first_name VARCHAR(90),
@@ -18,22 +20,27 @@ CREATE TABLE IF NOT EXISTS users
   PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS posts
-(
+CREATE TABLE IF NOT EXISTS posts(
   id SERIAL,
   title VARCHAR(180),
   url VARCHAR(180),
   content text,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+  user_id INTEGER REFERENCES users,
   PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS comments
-(
+CREATE TABLE IF NOT EXISTS comments(
   id SERIAL,
   body VARCHAR(510),
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+  user_id INTEGER REFERENCES users,
+  post_id INTEGER REFERENCES posts,
   PRIMARY KEY (id)
 );
+
+\i scripts/blog_data.sql;
+
+
