@@ -79,13 +79,23 @@
 -- ON comments.post_id = posts.id
 -- WHERE comments.created_at > DATE '2015-01-01'
 
-SELECT
-comments.id,
-comments.body AS comment_body,
-comments.created_at,
-comments.updated_at,
+-- SELECT
+-- comments.id,
+-- comments.body AS comment_body,
+-- comments.created_at,
+-- comments.updated_at,
+-- posts.title AS post_title,
+-- posts.url AS post_url
+-- FROM comments INNER JOIN posts
+-- ON comments.post_id = posts.id
+-- WHERE comments.body ~ 'USB';
+
+SELECT 
 posts.title AS post_title,
-posts.url AS post_url
-FROM comments INNER JOIN posts
-ON comments.post_id = posts.id
-WHERE comments.body ~ 'USB';
+users.first_name,
+users.last_name,
+comments.body AS comment_body
+FROM posts 
+INNER JOIN users ON posts.user_id = users.id
+INNER JOIN comments ON comments.post_id = posts.id
+WHERE comments.body ~ 'matrix';
