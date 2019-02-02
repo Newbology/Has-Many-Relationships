@@ -90,12 +90,21 @@
 -- ON comments.post_id = posts.id
 -- WHERE comments.body ~ 'USB';
 
-SELECT 
-posts.title AS post_title,
+-- SELECT 
+-- posts.title AS post_title,
+-- users.first_name,
+-- users.last_name,
+-- comments.body AS comment_body
+-- FROM posts 
+-- INNER JOIN users ON posts.user_id = users.id
+-- INNER JOIN comments ON comments.post_id = posts.id
+-- WHERE comments.body ~ 'matrix';
+
+SELECT
 users.first_name,
 users.last_name,
 comments.body AS comment_body
-FROM posts 
-INNER JOIN users ON posts.user_id = users.id
+FROM users
+INNER JOIN posts ON posts.user_id = users.id
 INNER JOIN comments ON comments.post_id = posts.id
-WHERE comments.body ~ 'matrix';
+WHERE comments.body ~ 'SSL' AND posts.content ~ 'dolorum';
